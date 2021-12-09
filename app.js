@@ -1,24 +1,36 @@
 const express = require("express");
 const app = express();
-const exphbs = require("express-handlebars");
+const path = require("path");
 const dotenv = require("dotenv");
-const connectDB = require("./config/db");
 const morgan = require("morgan");
+
+// handlebars variables
+const exphbs = require("express-handlebars");
+const hbs = exphbs.create({});
+
+//connection to the database
+const connectDB = require("./config/db");
 connectDB();
+
 // load a config file
 dotenv.config({ path: "./config/config.env" });
 
+// logger in dev mode
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
-// handlebars
-app.engine(".hbs", exphbs({ defaultLayout: "main", extname: ".hbs" }));
-app.set("view engine", ".hbs");
+// set path for views folder
+app.set("views", path.join(__dirname, "views"));
 
-//routes
+// handlebars settings
+app.engine("handlebars", hbs.engine);
+app.set("view engine", "handlebars");
+
+//routes imported from  routes folder
 app.use("/", require("./routes/index"));
 
+// port 3000 or 5000 activates
 const PORT = process.env.PORT || 5000;
 app.listen(
   PORT,
