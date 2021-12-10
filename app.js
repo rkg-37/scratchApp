@@ -27,6 +27,10 @@ app.set("views", path.join(__dirname, "views"));
 app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
 
+//static folder
+//app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname + "public")));
+
 //routes imported from  routes folder
 app.use("/", require("./routes/index"));
 
