@@ -21,7 +21,6 @@ if (process.env.NODE_ENV === "development") {
 }
 
 // set path for views folder
-app.set("views", path.join(__dirname, "views"));
 
 // handlebars settings
 app.engine("handlebars", hbs.engine);
@@ -29,7 +28,7 @@ app.set("view engine", "handlebars");
 
 //static folder
 //app.use(express.static(path.join(__dirname, "public")));
-app.use(express.static(path.join(__dirname + "public")));
+app.use(express.static("public"));
 
 //routes imported from  routes folder
 app.use("/", require("./routes/index"));
